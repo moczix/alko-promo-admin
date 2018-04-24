@@ -16,9 +16,13 @@ export class BaseHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    const newReq = req.clone({
-      url: environment.apiUrl + req.url
-    });
+    let newReq = req;
+    if(!req.url.includes('http') && !req.url.includes('https')) {
+      newReq = req.clone({
+        url: environment.apiUrl + req.url
+      });
+    }
+
     return next.handle(newReq)
       .pipe(
         tap(() => {
@@ -35,8 +39,6 @@ export class BaseHttpInterceptor implements HttpInterceptor {
                 this.errorService.setMessage(message);
               }
             }
-
-
           }
         )
       );

@@ -14,12 +14,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private mobileQueryListener: () => void;
 
+  toolBarTitle = 'Home';
+
   pages = [
-    {title: 'Alkohole', icon: 'folder', route: '.'},
-    {title: 'Kategorie', icon: 'folder', route: '.'},
-    {title: 'Tagi', icon: 'folder', route: '.'},
-    {title: 'Użytkownicy', icon: 'folder', route: '.'},
-    {title: 'Skargi', icon: 'folder', route: '.'}
+    {title: 'Home', icon: 'home', route: '.'},
+    {title: 'Alkohole', icon: 'collections', route: 'alcohols'},
+    {title: 'Kategorie', icon: 'collections_bookmark', route: '.'},
+    {title: 'Tagi', icon: 'label', route: '.'},
+    {title: 'Użytkownicy', icon: 'people', route: '.'},
+    {title: 'Skargi', icon: 'report_problem', route: '.'}
     ];
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
@@ -29,7 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(this.mobileQuery.matches === false) {
+    if (this.mobileQuery.matches === false) {
       this.menuOpened = true;
     }
   }

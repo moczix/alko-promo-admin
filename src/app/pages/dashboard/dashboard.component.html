@@ -2,15 +2,15 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Responsive App</h1>
+    <h1 class="example-app-name">{{toolBarTitle}}</h1>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [(opened)]="menuOpened" [mode]="mobileQuery.matches ? 'over' : 'side'"
+    <mat-sidenav #snav [(opened)]="menuOpened" [mode]="mobileQuery.matches ? 'push' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item [routerLink]="page.route" *ngFor="let page of pages">
+        <a mat-list-item [routerLink]="page.route" (click)="toolBarTitle = page.title; mobileQuery.matches === true ? snav.close() : ''" *ngFor="let page of pages">
           <mat-icon matListIcon>{{page.icon}}</mat-icon>
           {{page.title}}
         </a>

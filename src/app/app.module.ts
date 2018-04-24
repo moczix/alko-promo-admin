@@ -19,13 +19,29 @@ import {MyAuthService} from './shared/my-auth.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BaseHttpInterceptor} from './shared/base-http-interceptor';
 import {AuthInterceptor} from './shared/auth-interceptor';
-import {MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {
+  MatButtonModule, MatButtonToggleModule, MatCheckboxModule,
+  MatChipsModule, MatExpansionModule, MatFormFieldModule, MatGridListModule,
+  MatIconModule, MatInputModule,
+  MatListModule, MatPaginatorIntl, MatPaginatorModule, MatProgressSpinnerModule, MatSelectModule,
+  MatSidenavModule, MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule
+} from '@angular/material';
 import {environment} from '../environments/environment';
 import {ErrorService} from './shared/error.service';
 import { HomeComponent } from './pages/dashboard/home/home.component';
 import {AuthGuardService} from './shared/auth-guard.service';
 import {DashboardRoutingModule} from './pages/dashboard/dashboard-routing.module';
 import {MediaMatcher} from '@angular/cdk/layout';
+import { AlcoholComponent } from './pages/dashboard/alcohol/alcohol.component';
+import { AlcoholListComponent } from './pages/dashboard/alcohol-list/alcohol-list.component';
+import {AlcoholService} from './pages/dashboard/shared/alcohol.service';
+import {DateLocalePipe} from './pages/dashboard/shared/date-locale.pipe';
+import {MatPaginatorPL} from './pages/dashboard/shared/MatPaginatorPL';
+import {CategoryService} from './pages/dashboard/shared/category.service';
+import {TagService} from './pages/dashboard/shared/tag.service';
+import {ImageService} from './pages/dashboard/shared/image.service';
 
 export function getAuthServiceConfigs() {
   return new AuthServiceConfig( [
@@ -44,9 +60,11 @@ export function getAuthServiceConfigs() {
     LoginComponent,
     DashboardComponent,
     HomeComponent,
+    AlcoholComponent,
+    AlcoholListComponent,
 
 
-
+    DateLocalePipe,
   ],
   imports: [
     BrowserModule,
@@ -57,11 +75,24 @@ export function getAuthServiceConfigs() {
     AppRoutingModule,
     SocialLoginModule,
 
+
+
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatChipsModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
+    MatPaginatorModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BaseHttpInterceptor, multi: true},
@@ -75,7 +106,14 @@ export function getAuthServiceConfigs() {
 
     AuthGuardService,
     MyAuthService,
-    ErrorService
+    ErrorService,
+
+    AlcoholService,
+    CategoryService,
+    TagService,
+    ImageService,
+
+    { provide: MatPaginatorIntl, useClass: MatPaginatorPL}
 
   ],
   bootstrap: [AppComponent]
