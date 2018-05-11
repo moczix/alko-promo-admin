@@ -1,18 +1,22 @@
 
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">{{toolBarTitle}}</h1>
+<div class="dashboard-container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="snav.toggle(); toggleMenu(); menuOpened = !menuOpened"><mat-icon>menu</mat-icon></button>
+    <h1 class="app-name">{{toolBarTitle}}</h1>
   </mat-toolbar>
 
-  <mat-sidenav-container class="example-sidenav-container"
+  <mat-sidenav-container class="sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [(opened)]="menuOpened" [mode]="mobileQuery.matches ? 'push' : 'side'"
                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
-        <a mat-list-item [routerLink]="page.route" (click)="toolBarTitle = page.title; mobileQuery.matches === true ? snav.close() : ''" *ngFor="let page of pages">
+        <a mat-list-item [routerLink]="page.route" (click)="toolBarTitle = page.title; mobileQuery.matches === true ? snav.close() : null" *ngFor="let page of pages">
           <mat-icon matListIcon>{{page.icon}}</mat-icon>
           {{page.title}}
+        </a>
+        <a mat-list-item  (click)="signOut(); mobileQuery.matches === true ? snav.close() : null">
+          <mat-icon matListIcon>exit_to_app</mat-icon>
+          Wyloguj
         </a>
       </mat-nav-list>
     </mat-sidenav>

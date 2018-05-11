@@ -1,24 +1,26 @@
 import {Injectable} from '@angular/core';
-import {MyAuthService} from './my-auth.service';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
+
+import {Observable, of} from 'rxjs';
+
+import {AuthService} from './auth.service';
+import {catchError, filter, mergeMap} from 'rxjs/internal/operators';
+
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-  constructor(private myAuthService: MyAuthService, private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean {
-    return this.myAuthService.silentAuthCheck()
-      .map(signResult => {
-        this.myAuthService.setAuthData(signResult.token, signResult.type);
-        return true;
-      })
-      .catch(err => {
-        this.router.navigate(['../']);
-        return Observable.of(false);
-      });
+    return this.authService.gapiReady()
+      .pipe(
+        filter(status => !!status),
+        mergeMap(() => this.authService.silentSignIn()),
+        catchError(err => {
+            this.router.navigate(['../']);
+            return of(false);
+          })
+      );
   }
 }

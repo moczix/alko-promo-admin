@@ -1,5 +1,6 @@
 
 
 <div class="flex-container">
-  <button mat-raised-button color="primary" (click)="googleSignIn()">Zaloguj z Google</button>
+  <mat-spinner *ngIf="!signinChecked"></mat-spinner >
+  <button mat-raised-button color="primary" *ngIf="signinChecked" (click)="googleSignIn()">Zaloguj z Google</button>
 </div>

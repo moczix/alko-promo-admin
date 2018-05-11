@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AlcoholModel, AlcoholUpdateModel} from '../../../models';
 
 @Injectable()
@@ -26,6 +26,10 @@ export class AlcoholService {
 
   updateAlcohol(alcoholId: number, data: AlcoholUpdateModel) {
     return this.http.put(`/admin/alcohols/${alcoholId}`, data);
+  }
+
+  deleteAlcohol(alcoholId: number) {
+    return this.http.delete(`/admin/alcohols/${alcoholId}`);
   }
 
 

@@ -6,5 +6,6 @@ export interface  AlcoholUpdateModel {
   imageUrl: string;
   categoryId: number;
   accepted: boolean;
+  ocenPiwoUrl?: string;
   selectedTags: Array<number>;
 }

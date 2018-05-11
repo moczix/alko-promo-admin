@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService, GoogleLoginProvider} from 'angular5-social-login';
-import {MyAuthService} from '../../shared/my-auth.service';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/observable/of';
+
+
+
+
 import {Router} from '@angular/router';
+import {AuthService} from '../../shared/auth.service';
+import {filter, mergeMap} from 'rxjs/internal/operators';
+
 
 
 @Component({
@@ -16,27 +16,27 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private socialAuthService: AuthService, private myAuthService: MyAuthService, private router: Router) {
+  signinChecked = false;
+
+
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   ngOnInit() {
-
+    this.authService.gapiReady()
+      .pipe(
+        filter(val => !!val),
+        mergeMap(() => this.authService.silentSignIn())
+      )
+      .subscribe(
+        () => this.router.navigate(['/dashboard']),
+        err => { this.signinChecked = true; }
+      );
   }
 
   googleSignIn() {
-    Observable.fromPromise(this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID))
-      .mergeMap(signResult => {
-        return Observable.forkJoin(
-          Observable.of(signResult),
-          this.myAuthService.checkAuth(signResult.idToken, 666)
-        );
-      })
-      .subscribe(success => {
-          const [signResult, authRes ] = success;
-          this.myAuthService.setAuthData(signResult.idToken, 666);
-          this.router.navigate(['/dashboard']);
-        }
-      );
+    this.authService.signIn()
+      .subscribe(() => this.router.navigate(['/dashboard']));
   }
 
 }

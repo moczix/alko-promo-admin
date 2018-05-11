@@ -29,6 +29,9 @@ export interface AlcoholModel {
   name: string;
   voltage: number;
   description: string;
+  ocenPiwoUrl: string;
+
+
   createdAt: string;
   updatedAt: string;
 
