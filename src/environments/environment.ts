@@ -7,8 +7,11 @@ export const environment = {
   production: false,
 
   serverGoogleClientId: '350414787370-ecltr55ovcj9j10hs52pfhg7v53o5drk.apps.googleusercontent.com',
-  apiUrl: 'http://192.168.2.128/alkopromo/api/public',
-  imageUrl: 'http://192.168.2.128/alkopromo/api',
+  //apiUrl: 'http://192.168.2.128/alkopromo/api/public',
+  //imageUrl: 'http://192.168.2.128/alkopromo/api',
+
+  apiUrl: 'http://localhost/alkopromo/api/public',
+  imageUrl: 'http://localhost/alkopromo/api',
 
   tokenType: 666
 };

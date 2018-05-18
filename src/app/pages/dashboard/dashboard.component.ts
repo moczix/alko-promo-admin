@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AuthService} from '../../shared/auth.service';
 import {Router} from '@angular/router';
+import {MatDrawer} from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,9 +60,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(() => this.router.navigate(['../login']));
   }
 
-  toggleMenu() {
-    console.log('toggle');
-  }
 
   ngOnDestroy() {
     this.mobileQuery.removeListener(this.mobileQueryListener);

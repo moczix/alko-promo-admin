@@ -133,7 +133,7 @@ export class AuthService {
       );
   }
 
-  private loadGapi() {
+  private loadGapi() {// sdasdad
     return Observable.create(observer => {
       const googleScript = document.createElement('script');
       googleScript.src = 'https://apis.google.com/js/platform.js';
